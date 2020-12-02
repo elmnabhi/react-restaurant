@@ -7,25 +7,13 @@ import {
 
 class Menu extends Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            selectedDish: null
-        }
-    }
-
-    onDishSelect(dish) {
-        this.setState({ selectedDish: dish });
-    }
-
     renderDish(dish) {
         if (dish != null)
             return (
                 <Card>
                     <CardImg top src={dish.image} alt={dish.name} />
                     <CardBody>
-                        <CardTitle>{dish.name}</CardTitle>
+                        <CardTitle><strong>{dish.name}</strong></CardTitle>
                         <CardText>{dish.description}</CardText>
                     </CardBody>
                 </Card>
@@ -41,13 +29,14 @@ class Menu extends Component {
             return (
                 <div className="col-12 col-md-5 m-1" key={dish.id}>
                     <Card
-                        onClick={() => this.onDishSelect(dish)}>
+                        onClick={() => this.props.onClick(dish.id)}>
                         <CardImg width="100%" src={dish.image} alt={dish.name} />
                         <CardImgOverlay>
                             <CardTitle>{dish.name}</CardTitle>
                         </CardImgOverlay>
                     </Card>
                 </div>
+
             );
         });
 
@@ -55,11 +44,6 @@ class Menu extends Component {
             <div className="container">
                 <div className="row">
                     {menu}
-                </div>
-                <div className="row">
-                    <div className="col-12 col-md-5 m-1">
-                        {this.renderDish(this.state.selectedDish)}
-                    </div>
                 </div>
             </div>
         );
