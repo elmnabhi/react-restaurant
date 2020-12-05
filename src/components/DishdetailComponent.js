@@ -9,7 +9,7 @@ import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 
 
-function RenderComments({ comments, addComment, dishId }) {
+function RenderComments({ comments, postComment, dishId }) {
     if (comments != null) {
         return (
             <div>
@@ -20,7 +20,7 @@ function RenderComments({ comments, addComment, dishId }) {
                         <li>--{comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}</li>
                     </ul>
                 )}
-                <CommentForm dishId={dishId} addComment={addComment} />
+                <CommentForm dishId={dishId} postComment={postComment} />
             </div>
         )
 
@@ -33,7 +33,7 @@ function RenderDish({ dish }) {
     if (dish != null) {
         return (
             <Card >
-                <CardImg top src={baseUrl + dish.image} alt={dish.name} />
+                <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
                 <CardBody>
                     <CardTitle heading="true">{dish.name}</CardTitle>
                     <CardText>{dish.description}</CardText>
@@ -86,7 +86,7 @@ const DishDetail = (props) => {
                     </div>
                     <div className="col-12 col-md-5 m-1">
                         <RenderComments comments={props.comments}
-                            addComment={props.addComment}
+                            postComment={props.postComment}
                             dishId={props.dish.id}
                         />
                     </div>
@@ -121,7 +121,7 @@ class CommentForm extends Component {
 
     handleSubmit(values) {
         this.toggleModal();
-        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+        this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
     }
 
     render() {
